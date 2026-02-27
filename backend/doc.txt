@@ -1,0 +1,41 @@
+CUSTOMER SUPPORT MANUAL
+
+Users experiencing login problems should first clear their browser cache and cookies. If the issue persists, try using a different browser or incognito mode. For Chrome users, press Ctrl+Shift+Delete to open the clear browsing data dialog. For Firefox, use Ctrl+Shift+Del. Safari users can find the option under Develop > Empty Caches. If you're still having trouble, disable browser extensions temporarily and try again.
+
+To reset your password, click the 'Forgot Password' link on the login page. Enter your email address and check your inbox for reset instructions. The reset email may take up to 5 minutes to arrive. Check your spam folder if you don't see it in your inbox. The reset link expires after 24 hours for security reasons. If you don't receive the email, contact support with your username.
+
+Payment processing typically takes 2-3 business days. If your payment fails, please check your card details and ensure sufficient funds are available. We accept Visa, MasterCard, American Express, and PayPal. For international cards, ensure your bank allows international transactions. If the payment continues to fail, try using a different payment method or contact your bank.
+
+Your account may be suspended due to violations of our terms of service, suspicious activity, or payment issues. To reactivate your account, please contact our support team with your account details. We'll review your case within 24-48 hours. Common reasons for suspension include: multiple failed login attempts, unusual login locations, or chargebacks on payments.
+
+If the website is loading slowly, try these troubleshooting steps: Clear your browser cache, disable browser extensions, check your internet connection speed, try a different browser, or use incognito mode. The issue might also be on our end - check our status page for any ongoing maintenance. If problems persist, try accessing the site from a different device or network.
+
+If the mobile app keeps crashing, try these solutions: Force close the app and restart it, restart your phone, update the app to the latest version, clear the app cache (Android) or reinstall the app (iOS). Make sure your device has enough storage space and is running a supported OS version. If crashes persist, send us your device model and OS version for further assistance.
+
+To cancel your subscription, log into your account and go to the Billing section. Click on 'Manage Subscription' and then 'Cancel Subscription'. Your subscription will remain active until the end of the current billing period. You can also cancel by contacting our support team. Please note that cancellation takes effect at the end of your current billing cycle, and no refunds are provided for partial months.
+
+For API integration, first obtain your API key from the developer dashboard. Use HTTPS for all API calls and include your API key in the header. Rate limits are 1000 requests per hour for free accounts and 10,000 for premium accounts. Check our API documentation for endpoint details and example code. Common integration issues include incorrect authentication, exceeding rate limits, or malformed requests.
+
+To export your data, go to Account Settings > Data Export. Select the data types you want to export and choose your preferred format (CSV, JSON, or XML). Large exports may take up to 24 hours to process. You'll receive an email with a download link once ready. The download link expires after 7 days. For GDPR compliance, we provide complete data exports within 30 days of request.
+
+Enable two-factor authentication (2FA) for enhanced security. Go to Account Settings > Security > Two-Factor Authentication. You can use SMS, email, or authenticator apps like Google Authenticator or Authy. Scan the QR code with your authenticator app or enter the setup key manually. Save your backup codes in a secure location. If you lose access to your 2FA device, use a backup code or contact support.
+
+If you're having trouble uploading files, check these common issues: file size exceeds the 10MB limit, unsupported file format, unstable internet connection, or browser compatibility issues. Supported formats include PDF, DOC, DOCX, JPG, PNG, and MP4. Try using a different browser or clearing your browser cache. For large files, consider compressing them or using our bulk upload feature.
+
+To update your billing address, go to Account Settings > Billing Information. Click 'Edit' next to your current address and enter the new information. Make sure the address matches your payment method exactly. Changes take effect immediately for future billing cycles. If you have an active subscription, the address change won't affect your current billing cycle. Contact support if you need to update the address for tax purposes.
+
+Manage your email notifications in Account Settings > Notifications. You can customize which types of emails you receive: account updates, billing reminders, security alerts, or promotional emails. Use the toggle switches to enable or disable each category. Changes are saved automatically. If you're not receiving important emails, check your spam folder and add our domain to your whitelist. You can also set email frequency preferences.
+
+If you're experiencing database connection errors, this usually indicates a temporary server issue. Try refreshing the page or waiting a few minutes before trying again. If the problem persists, check our status page for any ongoing maintenance. Clear your browser cache and cookies, or try accessing from a different device. For persistent issues, contact technical support with the exact error message and timestamp.
+
+To delete your account permanently, contact our support team with your account details and reason for deletion. Account deletion is irreversible and will remove all your data, including files, settings, and purchase history. We require a 7-day waiting period before permanent deletion. During this time, you can still recover your account by logging in. For GDPR compliance, we'll completely remove your data within 30 days of the deletion request.
+
+Our platform works best with modern browsers: Chrome 90+, Firefox 88+, Safari 14+, and Edge 90+. If you're using an older browser, please update to the latest version. Internet Explorer is no longer supported. For the best experience, enable JavaScript and cookies. If you're still having issues, try disabling browser extensions or using incognito mode. Some corporate firewalls may block certain features.
+
+We offer refunds within 30 days of purchase for annual subscriptions and 7 days for monthly subscriptions. To request a refund, contact our billing team with your order number and reason for the refund. Refunds are processed to the original payment method within 5-7 business days. Digital products and services used for more than 30 days are not eligible for refunds. Partial refunds may be available for unused portions of annual subscriptions.
+
+If you see an SSL certificate error, don't proceed to the website as it may not be secure. This could be due to an expired certificate, incorrect system date/time, or a man-in-the-middle attack. Check your device's date and time settings first. If the problem persists, try accessing the site from a different device or network. Contact us immediately if you suspect a security issue. Always look for the padlock icon in your browser's address bar.
+
+Control your privacy settings in Account Settings > Privacy. You can manage who can see your profile, activity status, and contact information. Options include: public, friends only, or private. You can also control data sharing with third parties and marketing communications. Review and update these settings regularly to ensure they match your preferences. Some features may be limited if you choose maximum privacy settings.
+
+To optimize performance, try these tips: close unnecessary browser tabs, disable unused extensions, clear browser cache regularly, use a stable internet connection, and keep your browser updated. For heavy users, consider using our desktop app instead of the web version. If you're on a mobile device, close background apps and ensure you have sufficient storage space. Contact support if performance issues persist despite these optimizations.
