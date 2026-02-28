@@ -15,6 +15,7 @@ Requirements:
 
 from document_loader import DocumentLoader
 from agents import SearchAgent, ResponseAgent, AgentOrchestrator
+from typing import List, Dict, Any
 
 class DocumentChatSystem:
     def __init__(self):
@@ -76,30 +77,48 @@ class DocumentChatSystem:
         4. Process queries and display results nicely
         5. Handle keyboard interrupts gracefully
         """
-        print("=" * 50)
-        print("Document Chat System - Multi Agent RAG")
-        print("=" * 50)
-        print("Type your query, Type 'quit' or 'exit' to stop. \n")
+        print()
+        print("=" * 60)
+        print("  Document Chat System — Multi Agent RAG")
+        print("=" * 60)
+        print("  Type your question below. Type 'quit' or 'exit' to stop.")
+        print("=" * 60)
+        print()
 
         while True:
             try:
-                user_input = input("You: ").strip()
+                user_input = input("You > ").strip()
                 if not user_input:
                     continue
                 if user_input.lower() in ['quit', 'exit']:
-                    print("Bye.. have a good day!")
+                    print()
+                    print("Bye! Have a good day.")
+                    print()
                     break
-                
+
                 result = self.query(user_input=user_input)
-                print("\nAgent: {result['response']}")
-                if result.get('sources'):
-                    print("Sources: {','.join(result['sources'])}")
-                if result.get("follow_ups"):
-                    print("Follow-ups.")
-                    for q in result["follow_ups"]:
-                        print(f" -{q}")
+
                 print()
-            
+                print(f"Agent > {result['response']}")
+
+                sources = result.get('sources')
+                if sources:
+                    unique_sources = list(dict.fromkeys(sources))
+                    print(f"        Sources : {', '.join(unique_sources)}")
+
+                follow_ups = result.get("follow_ups")
+                if follow_ups:
+                    print("        Follow-up questions:")
+                    for i, q in enumerate(follow_ups, 1):
+                        print(f"          {i}. {q}")
+                print()
+            except KeyboardInterrupt:
+                print()
+                print("Bye! Have a good day.")
+                print()
+                break
+            except Exception as err:
+                print(f"   Error: {err}")
 
 
     def demo_queries(self):
@@ -113,7 +132,7 @@ class DocumentChatSystem:
         """
         queries = [
             "what are the main risks mentioned?",
-            "what re the financial costs?",
+            "what are the financial costs?",
             "Give me a general summary."
         ]
 
@@ -128,10 +147,10 @@ def main():
     4. If failed, show error message
     """
     system = DocumentChatSystem()
-    if sustem.ready:
+    if system.ready:
         system.interactive_mode()
     else:
-        print("Error. Failed to initialize. Please chcek if the doc exists").
+        print("Error. Failed to initialize. Please chcek if the doc exists")
 
 if __name__ == "__main__":
     main()

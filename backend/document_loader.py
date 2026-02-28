@@ -33,6 +33,8 @@ class DocumentLoader:
         self.chunks = []
         self.embeddings = []
         self.vocabulary = {}
+        self.word_doc_count = Counter()
+        self.num_chunks_total = 0
     
     def load_document(self, file_path: str = "doc.txt") -> str:
         """
@@ -49,8 +51,11 @@ class DocumentLoader:
         Returns:
             String content of the document, empty string if error
         """
-        with open(file_path, 'r', encoding="utf-8") as f:
-            return f.read()
+        try:
+            with open(file_path, 'r', encoding="utf-8") as f:
+                return f.read()
+        except FileNotFoundError:
+            return ""
 
     def split_into_chunks(self, text: str, chunk_size: int = 500, overlap: int = 50) -> List[str]:
         """
@@ -72,16 +77,21 @@ class DocumentLoader:
         """
         if not text:
             return []
-        
-        chunks = []
-        start = 0
 
-        while start < len(text):
-            end = start + chunk_size
-            chunk = text[start:end].strip()
-            if chunk:
-                chunks.append(chunk)
-                start += chunk_size - overlap
+        paragraphs = [p.strip() for p in re.split(r'\n\s*\n', text) if p.strip()]
+
+        chunks = []
+        for paragraph in paragraphs:
+            if len(paragraph) <= chunk_size:
+                chunks.append(paragraph)
+            else:
+                start = 0
+                while start < len(paragraph):
+                    end = start + chunk_size
+                    chunk = paragraph[start:end].strip()
+                    if chunk:
+                        chunks.append(chunk)
+                    start += chunk_size - overlap
 
         return [c for c in chunks if c]
 
@@ -104,7 +114,10 @@ class DocumentLoader:
         for chunk in chunks:
             words = re.findall(r'[a-z]+', chunk.lower())
             all_words.update(words)
-        vocab = {word: idx for idx in enumerate(sorted(all_words))}
+
+        vocab = {}
+        for idx, word in enumerate(sorted(all_words)):
+            vocab[word] = idx
         return vocab
 
     def create_embeddings(self, chunks: List[str]) -> np.ndarray:
@@ -133,13 +146,15 @@ class DocumentLoader:
         num_chunks = len(chunks)
         embeddings = np.zeros((num_chunks, vocab_size))
 
-       
         word_doc_count = Counter()
         for chunk in chunks:
             words = set(re.findall(r'[a-z]+', chunk.lower()))
             for word in words:
                 if word in self.vocabulary:
                     word_doc_count[word] += 1
+
+        self.word_doc_count = word_doc_count
+        self.num_chunks_total = num_chunks
 
         for i, chunk in enumerate(chunks):
             words = set(re.findall(r'[a-z]+', chunk.lower()))
@@ -148,11 +163,9 @@ class DocumentLoader:
             for word, count in word_count.items():
                 if word in self.vocabulary:
                     idx = self.vocabulary[word]
-                    # calculate TF and IDF
                     tf = count / total_words
                     idf = math.log(num_chunks / (word_doc_count[word] + 1))
                     embeddings[i][idx] = idf * tf
-        
         return embeddings
 
     def cosine_similarity(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
@@ -174,7 +187,6 @@ class DocumentLoader:
         dot = np.dot(vec1, vec2)
         magnitude_1 = np.linalg.norm(vec1)
         magnitude_2 = np.linalg.norm(vec2)
-
         if magnitude_1 == 0 or magnitude_2 == 0:
             return 0.0
         return dot / (magnitude_1 * magnitude_2)
@@ -198,7 +210,7 @@ class DocumentLoader:
         if self.embeddings is None or not self.chunks:
             return []
         
-        # converting query to TF-IDF using same vocabulary
+        # converting query to TF using same vocabulary
         query_words = re.findall(r'[a-z]+', query.lower())
         total_words = len(query_words) if query_words else 1
         word_count = Counter(query_words)
@@ -208,15 +220,14 @@ class DocumentLoader:
             if word in self.vocabulary:
                 idx = self.vocabulary[word]
                 tf = count / total_words
-                query_vector[idx] = tf
+                idf = math.log(self.num_chunks_total / (self.word_doc_count[word] + 1)) if self.word_doc_count[word] > 0 else 0
+                query_vector[idx] = tf * idf
         
-        # calculating cosine similarity with all embeddings
         similarities = []
         for i, chunk in enumerate(self.chunks):
             score = self.cosine_similarity(query_vector, self.embeddings[i])
             similarities.append((chunk, score))
 
-        # return top k results sorted by similarity score
         similarities.sort(key=lambda x: x[1], reverse=True)
         return similarities[:top_k]
 

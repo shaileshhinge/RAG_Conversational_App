@@ -83,7 +83,7 @@ class SearchAgent:
             Intent category string
         """
         query_lower = query.lower()
-        if any(word in query_lower for word in ["risk", "liability", "threat"]):
+        if any(word in query_lower for word in ["risk", "danger", "liability", "threat"]):
             return "risk"
         elif any(word in query_lower for word in ["cost", "price", "payment", "financial"]):
             return "financial"
@@ -136,9 +136,9 @@ class ResponseAgent:
         intent = search_results.get("intent", "general")
 
         top_chunk = content_list[0] if content_list else {}
-        text = top_chunk.get('text', top_chunk) if isinstance(top_chunk, dict) else str(top_chunk)
+        text = top_chunk[0] if isinstance(top_chunk, tuple) else (top_chunk.get('text', '') if isinstance(top_chunk, dict) else str(top_chunk))
 
-        intent_map - {
+        intent_map = {
             "risk": f"Risk Analysis: {text}",
             "financial": f"Financial information: {text}",
             "compliance": f"Compliance information: {text}",
@@ -258,13 +258,13 @@ class AgentOrchestrator:
                 "response": concise_text,
                 "sources": last_response.get("sources"),
                 "follow_ups": last_response.get("follow_ups"),
-                "intent": last_response.get("general")
+                "intent": last_response.get("intent")
             }
 
         # Regular processing
         search_results = self.search_agent.search_documents(query=query)
         formatted = self.response_agent.format_response(search_results=search_results)
-        follow_ups = self.response_agent.generate_follow_ups(search_results=search_results["intent"])
+        follow_ups = self.response_agent.generate_follow_ups(search_results["intent"])
 
         result = {
             "response": formatted["response"],
